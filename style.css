@@ -1,0 +1,593 @@
+*{
+    margin:0;
+    padding:0;
+    left:0;
+    top:0;
+}
+
+
+/*                 tags html           */
+
+
+html, body {
+	font-family: Helvetica, Arial, sans-serif;
+   /* overflow-x: hidden;
+	overflow-y: hidden;*/
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+h1, h3{
+    text-align: center;
+    text-transform: uppercase;
+}
+textarea {
+	position: relative;
+	width:100%;
+	padding:5px;
+	padding-bottom:3px;
+    resize:none; 
+    border-color: #ccc;
+}
+
+.header{/* aonde fica o nome CONTROLE DE ESTOQUE */
+    position:relative;
+    width:98.5vw;
+    padding:0.5%;
+    border:1px solid #768f9e;
+    box-shadow: 0px 7px 14px -7px #2d2e52;
+    background: linear-gradient(to bottom, #9abff5 5%, #86b2cf 100%);
+    background-color: #599bb3;
+    border-radius: 8px;
+    color:#e0ebf3;
+    text-shadow: 0px 1px 0px #3e4cca;
+}
+#logo{
+    position:absolute;
+    top:3px;
+    left:5px;
+    width: 100px;
+    height: 50px;
+}
+
+
+
+/*                              grid                                 */
+
+
+
+/* linhas row grid grade */
+.linha{
+	position:relative;
+	width:98%;
+	margin:0 auto;
+	padding:0;
+}
+
+/* colunas col grid grade */
+.col{
+	position:relative;
+    left:0;
+	padding:0;
+	bottom:0;
+	top:0;
+	float:left;
+	margin:0.1%;
+    width:99.9vw;
+    
+}
+.col-1-2, .col-5{
+	width:49.8%;
+}
+.col-1-3{
+	width:33.12%;
+}
+.col-1-4{
+	width:24.8%;
+	
+}
+.col-1-5, .col-2{
+	width:19.8%;
+}
+.col-1-6{
+	width:16.47%;
+}
+.col-1-7{
+	width:14.08%;
+}
+.col-1-8{
+	width:12.3%;
+}
+.col-1-9{
+	width:10.91%;
+}
+.col-1-10, .col-1{
+	width:9.8%;	
+}
+.col-2-3{
+	width:65.5%;
+}
+.col-3{
+	width:29.8%;
+}
+.col-3-4{
+	width:74.78%;
+}
+.col-4{
+	width:39.8%;
+}
+.col-6{
+	width:59.8%;
+}
+.col-7{
+	width:69.8%;
+}
+.col-8{
+	width:79.8%;
+}
+.col-9{
+	width:89.8%;	
+}
+.col-10{
+	width:99.8%;	
+}
+
+
+
+/*                                     cabecario h1                                */
+
+
+
+.cabecario{/* sombreamento onde fica o nome do controle, farmacia, oficina, etc. */
+    padding: 0 5px;
+    margin-left:30px;
+    border:1px solid #a04b4b;
+    box-shadow: 0px 7px 14px -7px #571d1d;
+    background: linear-gradient(to bottom, #f56666 5%, #cf5454 100%);
+    background-color: #599bb3;
+    border-radius: 8px;
+    color:#ffffff;
+    text-shadow: 0px 1px 0px #ce0000;
+    /*box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);*/
+    transform: translateY(-5px);
+    /*transition:box-shadow 0.3s ease, transform 0.3s ease;*/
+}
+/*
+.cabecario:hover{
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+*/
+.body{/* fica abaixo do nome nome CONTROLE DE ESTOQUE até o fin da pagina*/
+    position:relative;
+    width:99.5vw;
+    height:90vh;
+}
+
+
+
+/*                             botoes                              */
+
+
+
+.botoes{/* aonde fica o campo pesquisa e os botoes */
+     padding:9px 0;
+     padding-left:5px;
+}
+.clear-icon{/* configuracao do x no input pesquisa quando digita alguma coisa */
+    position:absolute;
+    top:5px;
+    left:58.5%;
+    cursor: pointer;
+    display:none;
+    color:#888;
+    z-index: 2;
+}
+.clear-icon-cat{/* configuracao do x no input pesquisa quando digita alguma coisa */
+    position:absolute;
+    top:2px;
+    left:77.5%;
+    cursor: pointer;
+    display:none;
+    color:#888;
+    z-index: 100;
+    font-size: 20px;
+}
+/* mostra o x no input pesquisa quando digita alguma coisa */
+.botoes input:not(:placeholder-shown) + .clear-icon{
+    display: inline;
+}
+/* mostra o x no input pesquisa quando digita alguma coisa */
+.categ input:not(:placeholder-shown) + .clear-icon-cat{
+    display: inline;
+}
+button, .buton{
+    position:relative;
+    background-color:#dedede;/*dedede*/
+    padding:6px;
+    border:1px solid  #276873;
+    cursor: pointer;
+    min-width: 70px;
+    transition: 0.3s;
+    border-radius: 8px;
+    display: inline-block;
+    color:#ffffff;
+}
+.button:active, .buton:active{
+    position: relative;
+    top:1px;
+}
+.but_tres{
+    min-width:40px;
+}
+.categoria, 
+.marcar, 
+.desmarcar, 
+.pesquisar, 
+.imprimir, 
+.cancelar, 
+.baixar1, 
+.baixarM, 
+.imprimir{
+   box-shadow: 0px 7px 14px -7px #276873;
+   background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+   background-color: #599bb3;
+   border-radius: 8px;
+   display: inline-block;
+   color:#ffffff;
+   text-shadow: 0px 1px 0px #3d768a;
+}
+.categoria:hover, 
+.marcar:hover, 
+.desmarcar:hover, 
+.pesquisar:hover, 
+.imprimir:hover, 
+.cancelar:hover, 
+.baixar1:hover, 
+.baixarM:hover, 
+.imprimir:hover,
+.tres_imprimir:hover{
+    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color: #408c99;
+}
+.novo, .cadastrar, .alterar{
+box-shadow: 0px 7px 14px -7px #27732d;
+   background: linear-gradient(to bottom, #5cb359 5%, #439940 100%);
+   background-color: #599bb3;
+   border-radius: 8px;
+   display: inline-block;
+   color:#ffffff;
+   text-shadow: 0px 1px 0px #3d8a47;
+
+}
+.novo:hover, .cadastrar:hover, .alterar:hover{
+    background: linear-gradient(to bottom, #479940 5%, #59b365 100%);
+    background-color: #409947;
+
+}
+.but_tres_mais{/* botao com o caracer + do lado esquerdo */
+    min-width:30px;
+    margin-right: 5px;
+}
+.tres_imprimir{/* botao imprimir " Imp " na tabela principal */
+    max-width:47px;
+    padding:6px;
+    text-decoration: none;
+    box-shadow: 0px 7px 14px -7px #276873;
+    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color: #599bb3;
+    border-radius: 8px;
+    display: inline-block;
+    color:#ffffff;
+    border:1px solid #276873;
+    text-shadow: 0px 1px 0px #3d768a;
+}
+.but_excluir{
+    box-shadow: 0px 7px 14px -7px #732727;
+    background: linear-gradient(to bottom, #b35959 5%, #994040 100%);
+    background-color: #b35959;
+    border-radius: 8px;
+    display: inline-block;
+    color:#ffffff;
+    text-shadow: 0px 1px 0px #8a3d3d;
+}
+.but_excluir:hover{
+    background: linear-gradient(to bottom, #994040 5%, #b35959 100%);
+    background-color: #994040;
+}
+.botao-imprimir{
+    background-color: #d1def1;
+    border: 1px solid blue;
+}
+.button:hover, .but-mais:hover{
+    background-color:#aaa;
+    transition: 0.3s;
+}
+.but-reader{
+    float:right;
+    margin-right:2vw;
+}
+
+label{
+    display:block;
+    margin-bottom: 5px;
+}
+input{
+    position:relative;
+    width: 98%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+.data{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.pesquisa{
+    width: 96.5%;
+}
+.t{
+	position:relative;
+	left:6px;
+}
+select{
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 4px;
+    border: 1px solid #ccc;
+}
+.botao-cancelar{
+    float:right;
+}
+#form-alterar-produto, #form-produto{
+    display:none; 
+    margin-top:0;
+}
+
+thead th{
+    position: sticky;
+    z-index: 4;
+    top:0;
+    /*border: 1px solid #272f73;*/
+    border:none;
+    font-size: 0.8em;
+    box-shadow: 0px 7px 14px -7px #273573;
+    color:#ffffff;
+    text-shadow: 0px 1px 0px #3d498a;
+}
+th, td{
+    font-size: 0.8em;
+    height: 30px;
+    border-color:#ccc;
+}
+td{
+    font-size: 0.7em;
+}
+tr:nth-child(even){
+	background-color:#e0e0e0;
+}
+tr:hover{
+    background-color:#d0d0d0;
+}
+.header-form{/*  barra de identificacao dos formularios grandes  */
+    font-size: 0.8em;
+    padding: 7.5px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #272f73;
+    border-radius: 3px;
+    box-shadow: 0px 7px 14px -7px #273573;
+    background: linear-gradient(to bottom, #5066bb 5%, #3133b3 100%);
+    background-color: #414679;
+    color:#ffffff;
+    text-shadow: 0px 1px 0px #3d498a;
+    width:96.6vw;
+    margin-left: 0.5%;
+}
+td{
+    padding-left:5px;
+    border-color:#ccc;
+}
+.td-categoria-produto{
+     border-bottom:1px solid #ccc;
+}
+.td-categoria-botao{
+     border-bottom:1px solid #ccc;
+}
+.tabela{/* tabela principal de produtos */
+	margin:0;
+	width:100vw;
+    height:81vh;
+}
+.overflow-tabela{/* overflow da tabela principal para movimentar linhas da tabela para cima e para baixo  */
+    overflow-y: hidden;
+	margin:0;
+	width:99vw;
+    height:76vh;/*76vh passa para 40vh*/
+	overflow:auto;
+    border-bottom: 1px solid #aaa;
+	margin-bottom:1px; 
+    margin-left: 0.5%;
+}
+.tabelaCategoria{/* tabela categoria */
+    overflow-y: hidden;
+	margin:0;
+	width:100%;
+    height:30vh;
+	overflow:auto;
+	margin-bottom:10px; 
+    border:solid 1px #bbb;
+    background-color: #ffffff;
+}
+.table-categoria td{
+    border-color: red;
+}
+
+.div-categoria{/* area que envolve a tabela categoria */
+    padding:5%;
+    background-color:burlywood;
+    width: 90%;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    box-shadow: 0px 7px 14px -7px #58595f;
+}
+.th-categoria-categoria{/* cabecario da tabela categoria */
+    width: 80%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #606680 5%, #4a4b72 100%);
+    background-color: #414679;
+}
+.th-acoes-categoria{
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #737a99 5%, #5f6091 100%);
+    background-color: #414679;
+
+}
+
+.thCheckbox{
+    width: 5%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #606680 5%, #4a4b72 100%);
+    background-color: #414679;
+    
+}
+.thContagem{
+    width: 5%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #737a99 5%, #5f6091 100%);
+    background-color: #414679;
+}
+.thId{
+    width: 5%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #606680 5%, #4a4b72 100%);
+    background-color: #414679;
+}
+.thNome{
+    width: 20%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #737a99 5%, #5f6091 100%);
+    background-color: #414679;
+}
+.thVenda{
+    width: 10%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #606680 5%, #4a4b72 100%);
+    background-color: #414679;
+}
+.thQuantidade{
+    width: 5%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #737a99 5%, #5f6091 100%);
+    background-color: #414679;
+}
+.thPrateleira{
+    width: 5%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #606680 5%, #4a4b72 100%);
+    background-color: #414679;
+}
+.thCategoria{
+    width: 20%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #737a99 5%, #5f6091 100%);
+    background-color: #414679;
+}
+.thAcoes{
+    width: 25%;
+    background-color:rgb(51, 83, 170);/*ddd*/
+    background: linear-gradient(to bottom, #606680 5%, #4a4b72 100%);
+    background-color: #414679;
+}
+
+.tdQuantidade{
+    text-align: right;
+    padding-right: 10px;
+}
+
+.rodape-tabela{
+    position: relative;
+    background:#ddd;
+    padding:10px 0;
+    width: 100%;
+}
+#total{
+    padding-left:10px;
+}
+.total{
+    margin-left:10px;
+    font-size:  0.8em;
+}
+.form{/* tamanho dos formularios maiores */
+   position: relative;
+    height:60vh;
+    width: 94%;
+    float: left;
+    margin:0 1%;
+    padding:1% 2%;
+    background-color: #fff;
+}
+.mascara{
+    content: '';
+    position: absolute;
+    height:100vh;
+    width: 100%;
+    float: left;
+    margin:0;
+    padding:0;
+    left: 0;
+    top:0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    display: none;
+}
+.header-categoria{/*  barra de identificacao dos formularios pequenos  */
+    font-size: 0.8em;
+    padding-top: 7px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    border: 1px solid #272f73;
+    border-radius: 3px;
+    box-shadow: 0px 7px 14px -7px #273573;
+    background: linear-gradient(to bottom, #5066bb 5%, #3133b3 100%);
+    background-color: #414679;
+    color:#ffffff;
+    text-shadow: 0px 1px 0px #3d498a;
+    margin-bottom: 30px;
+}
+.form-menor{/*  formularios menores  */
+    position: absolute;
+    width: 30%;
+    min-width: 50px;
+    height: 82%;
+    top:0;/*320px*/
+    left: 34%;
+    padding: 50px;
+    z-index: 7;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow:0px 0px 1em #444;
+    display:none;
+}
+.maiuscula{/* para transformar o texto em letras maiusculas */
+    text-transform: uppercase;
+}
+.div-baixarMais{/* div de informacoes do formulario baixar mais */
+    margin-bottom: 30px;
+    background-color: burlywood;
+    padding:2%;
+    width:96%;
+    border-radius: 5px;
+    box-shadow: 0px 7px 14px -7px #58595f;
+}
+.div-alterarCategoria{/* para baixar um pouco o texto no formulario de alterar categoria */
+    margin-top: 20px;
+}
+
+.ativo{
+    cursor:not-allowed;
+    opacity: 0.4;
+    background: grey;
+}
+

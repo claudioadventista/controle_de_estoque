@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Estoque</title>
+		<!--<link rel="shortcut icon" href="favicon.ico" />-->
+        <link rel="shortcut icon" href="favicon.png" />
+		<meta name="viewport" content="widhth=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=10,  minimum-scale=1.0" />
+		<meta name="referrer" content="default" id="meta_referrer" />
+		<meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="mascara" class="mascara"></div>
+        <div class="header">
+            <div class="logo" id="logo"></div>
+            <h1>Estoque <span class="cabecario">Oficina Eletrônica</span></h1>
+        </div>
+        <div class="body">
+            <div class="botoes" id="botoes">
+                <div class="col col-1">
+                    <button type="button" class="button novo desabilita" id="novoCadastro" >+ Novo</button>
+                </div>
+                <div class="col col-3">    
+                    <button type="button" id="mais-cat" class="button categoria">+ Categoria</button>
+                     <button type="button" class="button marcar desabilita" id="marcar"  disabled  onclick="marcar()" >Marcar</button>
+                    <button type="button" class="button desmarcar desabilita" id="desmarcar" disabled onclick="desmarcar()" >Desmarcar</button>
+                </div>
+                <div class="col col-4">
+                    <input style="width:60%;"  class="pesquisa maiuscula" type="text" id="pesquisarProduto" placeholder="Pesquisar produto..." oninput="formataCampo(this)" onclick="cancelar();">
+                    <span class="clear-icon" id="clearBtn" >&times;</span>
+                    <button type="button" class="button pesquisar desabilita" id="btn-pesquisa" >Pesquisar</button>
+                    <button type="button" class="button imprimir desabilita" id="imprimir" disabled >Imprimir</button>
+                   
+                   
+                </div>
+            </div>
+
+            
+             <!-- formulario para adicionar nova categoria -->
+            <form class="form-menor" id="novaCat">
+                <div class="header-categoria">
+                    <label for="" >Formulário Nova Categoria</label>
+                </div>
+                <br>
+                <div class="linha">
+                    <div class="col col-2">
+                        Total : <span id="total-categoria"></span>
+                    </div>
+                    <div class="col col-6 categ">
+                        <input style="width:80%;"  class="pesquisa maiuscula" type="text" id="pesquisarCategoria" maxlength="30" placeholder="Pesquisar categoria..." oninput="formataCampo(this)" >
+                        <span class="clear-icon-cat" id="clearBtnCat" >&times;</span>
+                    </div>
+                    <div class="col col-1">
+                        <button type="button" class="button pesquisar" id="btn-pesquisaCat" >Pesquisar</button>
+                   </div>
+                </div>
+                <div class="linha">
+                    <div class="col col-10 div-categoria">
+                        <div class="tabelaCategoria">
+                            <table>
+                                <thead>    
+                                    <tr>
+                                        <th class="th-categoria-categoria">Tabela Categoria</th>
+                                        <th colspan="2" class="th-acoes-categoria">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-categoria"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="linha">
+                    <div class="col col-10 ">
+                        <label for="novaCate" class="t" >Digite a Nova Categoria:</label>
+                        <input type="text" id="novaCate" maxlength="30" name="novaCate" class="maiuscula" required oninput="formataCampo(this)">
+                        <button type="submit" class="button cadastrar" id="cadastrar-nova-Categoria">Cadastrar</button>
+                        <button type="button" class="button cancelar" onclick="document.getElementById('novaCat').style.display = 'none';document.getElementById('pesquisarCategoria').value=''; document.getElementById('mascara').style.display = 'none'; ">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- formulario para alterar a categoria -->
+            <form class="form-menor" id="alterarCat">
+                 <div class="header-categoria">
+                    <label for="" >Formulário Alterar Categoria</label>
+                </div>
+                <div class="linha">
+                    <div class="col col-10 div-alterarCategoria">
+                        <label for="alterarCate" class="t" >Digite a Alteração na Categoria:</label>
+                        <input type="text" id="alterarCate" maxlength="100" name="alterarCate" class="maiuscula" required oninput="formataCampo(this)" >
+                        <button type="submit" class="button alterar" id="alterar-Categoria">Alterar</button>
+                        <button type="button" class="button cancelar" onclick="document.getElementById('alterarCat').style.display = 'none';document.getElementById('mais-cat').click();">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- tabela de produtos -->        
+            <div id="tabela" class="tabela">
+                <div id="overflow-tabela" class="overflow-tabela">
+                    <table  border="1"  cellpadding="2" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="thCheckbox">Imp</th>
+                                <th class="thContagem">Cont</th>
+                                <th class="thId">ID</th>
+                                <th class="thNome">Nome</th>
+                                <th class="thVenda">Venda</th>
+                                <th class="thQuantidade">Qtd.</th>
+                                 <th class="thPrateleira">Local</th>
+                                <th class="thCategoria">Categoria</th>
+                                <th class="thAcoes">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-produtos"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="rodape-tabela" class="rodape-tabela">
+                <div class="total">Total :<span id="total"></span></div>
+            </div>
+
+            <!-- fomulario para baixar mais de um produto -->
+            <form class="form-menor" id="form-baixar-mais">
+                <div class="header-categoria">
+                    <label for="">Formulário Baixar Mais</label>
+                </div>
+                <br>
+                <div class="linha">
+                    <div class="col col-10 div-baixarMais">
+                        <div class="col col-10">
+                             <span class="t">Nome: <span id="baixaNome"></span></span>
+                        </div>
+                        <div class="col col-10">
+                            <span class="t">Linha: <span id="baixaNumero"></span></span>
+                        </div>
+                        
+                        <div class="col col-10">  
+                            <span class="t">Categoria: <span id="baixaCategoria"></span></span>
+                        </div>
+                        <div class="col col-10">
+                            <span class="t">Quantidade: <span id="baixaQuantidade"></span></span>
+                        </div>
+                    </div>
+                    <label for="baixarMais" class="t" >Digite quanto quer baixar:</label>
+                    <div class="col col-10">
+                        <input type="text" id="baixarMais" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6">
+                        <input type="hidden" id="inputBaixarMais">
+                        <button type="button" class="button alterar" onclick="if(document.getElementById('baixarMais').value.length < 1){alert('Nenhum valor foi digitado!');exit();};darBaixa(document.getElementById('inputBaixarMais').value,document.getElementById('baixarMais').value)">Baixar</button>
+                        <button type="button" class="button cancelar" id="cancelarBaixaMais">Cancelar</button>
+                    </div>
+                    </div>
+            </form>
+
+            <!-- formulario de produto-->
+            <form class="col col-10" id="form-produto">
+                <div class="header-form">Formulário de Cadastro</div>
+                <div class="form">
+                    <div class="col col-5">
+                        <div class="linha">
+                            <div class="col col-5">
+                                <label for="nome" class="t c" >* Nome do Produto:</label>
+                                <input type="text" class="maiuscula" id="nome" maxlength="100" required oninput="formataCampo(this)">
+                            </div>
+                            <div class="col col-1"></div>
+                            <div class="col col-4">   
+                                   <label for="fabricante" class="t" >Fabricante:</label>
+                                <input type="text" id="fabricante" class="maiuscula" maxlength="100" oninput="formataCampo(this)">                                                     
+                            </div>                                 
+                        </div> 
+                        <div class="linha">                          
+                            <div class="col col-5">
+                                <label for="cadastrarCategoria"  class="t c" >* Categoria:</label>
+                                <select  id="cadastrarCategoria" required >
+                                   
+                                </select>
+                            </div>
+                            <div class="col col-1"></div>
+                            <div class="col col-4">
+                                <label for="dataEntrada"  class="t">Cadastro:</label>
+                                <input type="date" id="dataEntrada" class="data">
+                            </div>                         
+                        </div>
+                        
+                        <div class="linha">
+                            <div class="col col-5">
+                                <label for="codigo_barras" class="t" >Código de Barra:</label>                               
+                                <input type="text" id="codigo_barras" oninput="formataCampo(this)">
+                            </div>
+                            <div class="col col-1"></div>
+                            <div class="col col-4">                               
+                                <label for="prateleira" class="t" >Prateleira:</label>                               
+                                <input type="text" id="prateleira" class="maiuscula" maxlength="50" oninput="formataCampo(this)">                                                            
+                            </div>                                 
+                        </div> 
+                        <div class="linha">
+                            <div class="col col-5">
+                                <label for="outros" class="t" >Outros:</label>
+                                <input type="text" id="outros" class="maiuscula" maxlength="150" oninput="formataCampo(this)">
+                            </div>
+                            <div class="col col-1"></div>
+                            <div class="col col-4">
+                                 <label for="" class="t" >N/C:</label>
+                                <input type="text" id="" style="background-color: #dedede;outline: none;" readonly> 
+                            </div>
+                        </div>  
+                        <div class="linha">
+                            <div class="col col-1-4">
+                                <label for="preco_custo"  class="t">Custo:</label>
+                                <div class="col col-9">
+                                    <input type="text" id="preco_custo" step="0.01" maxlength="8" onclick="this.value = '';">
+                                </div> 
+                            </div>
+                            <div class="col col-1-4">
+                                <label for="preco_venda"  class="t">Venda:</label>
+                                <div class="col col-9">                                   
+                                    <input type="text" id="preco_venda" step="0.01" maxlength="8" onclick="this.value = '';">
+                                </div>
+                            </div>                                                                                                                            
+                            <div class="col col-1-4">
+                                <label for="qtdInicial" class="t c">* Qtd. Inicial:</label>
+                                <div class="col col-9">
+                                    <input type="text" id="qtdInicial" step="0.01" min="1" required onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6" >
+                                </div>
+                            </div>                                          
+                            <div class="col col-1-4">
+                                <label for="quantidade" class="t">Qtd. Atual:</label>
+                                <div class="col col-9">
+                                    <input type="text" id="quantidade" step="0.01" min="1" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6" >
+                                </div>
+                            </div>
+                        </div>
+                         <div class="linha">
+                                    <div class="col col-1-4">
+                                        <label for="minimo" class="t">Mínimo:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="minimo" step="0.01" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6"  >
+                                        </div>
+                                    </div>
+                                    <div class="col col-1-4">
+                                        <label for="maximo" class="t">Máximo:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="maximo" step="0.01" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6"  >
+                                        </div>
+                                    </div>
+                                    <div class="col col-1-4">
+                                       
+                                    </div>
+                                    <div class="col col-1-4">
+                                      
+                                    </div>                                                                                                                                                                 
+                            </div>     
+                                                                                                            
+                    </div>                              
+                    <div class="col col-5">
+                        <div class="linha">
+                            <div class="col col-10">
+                                <label for="fornecedor" class="t" >Fornecedor:</label>
+                                <input type="text" id="fornecedor" class="maiuscula" maxlength="150" oninput="formataCampo(this)">
+                            </div>
+                        </div>
+                        <div class="linha">
+                            <div class="col col-10">
+                                <label for="endereco" class="t" >Endereço:</label>
+                                <input type="text" id="endereco" class="maiuscula" maxlength="150" oninput="formataCampo(this)">
+                            </div>
+                        </div>
+                        <div class="linha">                              
+                            <div class="col col-4">                               
+                                <label for="telefone" class="t" >Telefone:</label>                               
+                                <input type="text" id="telefone"  maxlength="15" onkeyup="mascaraTelefone(this)">                                                            
+                            </div> 
+                            <div class="col col-1"></div>                         
+                            <div class="col col-5">                               
+                                <label for="email" class="t" >Email:</label>                               
+                                <input type="text" id="email" oninput="formataCampo(this)">                                                            
+                            </div>
+                        </div> 
+                        <div class="linha">
+                            <div class="col col-10">
+                                <label for="observacao" class="t" >Observação:</label> 
+                                <textarea class="textarea maiuscula" cols="10" rows="5" id="observacao" name="observacao"  autocomplete="off" maxlength="254" oninput="formataCampo(this)" ></textarea>
+                            </div>
+                        </div>  
+                        <div class="linha">
+                                    <div class="col col-1-4" style="margin-top:11px;">
+                                         <label for="dataValidade"  class="t">Validade:</label>
+                                        <div class="col col-9">
+                                            <input type="date" id="dataValidade" class="data">
+                                        </div>
+                                    </div>
+                                    <div class="col col-1-4">
+                                    </div>
+                                    <div class="col col-1-4">
+                                    </div>
+                                    <div class="col col-1-4">
+                                    </div>                                                                                                                                                                 
+                            </div>    
+                                                                    
+                    </div>
+                </div>
+                <div class="linha">    
+                    <div class="col col-10">
+                        <button type="submit" class="button alterar" >Cadastrar</button>
+                        <button type="button" class="button cancelar"  onclick="cancelar()">Cancelar</button>
+                    </div>    
+                </div>                          
+            </form>                   
+           
+            <div class="col col-10" style="margin-top:0;">
+
+                <!-- formulario de alteracao -->
+                 
+                <form id="form-alterar-produto">
+                    <div class="header-form">Formulário de Alteração</div>
+                    <div class="form">
+                        <div class="col col-5">
+                            <div class="linha">
+                                <div class="col col-5">
+                                    <label for="novoNome" class="t" >* Nome do Produto:</label>
+                                    <input type="text" id="novoNome" maxlength="100" class="maiuscula" required oninput="formataCampo(this)">
+                                </div>
+                                <div class="col col-1"></div>
+                                <div class="col col-4">  
+                                    <label for="novoFabricante" class="t" >Fabricante:</label>
+                                    <input type="text" id="novoFabricante" class="maiuscula" maxlength="100" oninput="formataCampo(this)">                                                             
+                                </div>
+                            </div> 
+                            <div class="linha">                          
+                                <div class="col col-5">
+                                    <label for="novaCategoria"  class="t" >Categoria:</label>
+                                    <input type="text" id="novaCategoria" style="background-color: #dedede;outline: none;" readonly>
+                                </div>
+                                <div class="col col-1"></div>
+                                 <div class="col col-4">
+                                    <label for="alterarCategoria" class="t" >Mudar categoria:</label>
+                                     <select  id="alterarCategoria" >
+                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="linha">
+                                <div class="col col-5">
+                                     <label for="novoCodigo_barras" class="t" >Código de Barra:</label>                               
+                                    <input type="text" id="novoCodigo_barras" oninput="formataCampo(this)">
+                                </div>
+                                <div class="col col-1"></div>
+                                <div class="col col-4">
+                                    <label for="novoOutros" class="t" >Outros:</label>
+                                    <input type="text" id="novoOutros" class="maiuscula" maxlength="150" oninput="formataCampo(this)">
+                                </div>
+                            </div> 
+                            <div class="linha">                          
+                                <div class="col col-1-4">
+                                    <label for="novaDataEntrada"  class="t">* Cadastro:</label>
+                                    <div class="col col-9">
+                                        <input type="date" id="novaDataEntrada" class="data" required>
+                                    </div>
+                                </div>
+                                <div class="col col-1-4">
+                                    <label for="novaPrateleira" class="t" >Prateleira:</label>  
+                                    <div class="col col-9">                          
+                                        <input type="text" id="novaPrateleira" class="maiuscula" maxlength="50" oninput="formataCampo(this)">
+                                    </div>
+                                </div> 
+                                <div class="col col-1-4">
+                                    <label for="novaDataReposicao"  class="t">Reposição:</label>
+                                    <div class="col col-9">
+                                    <input type="date" id="novaDataReposicao" style="background-color: #dedede;outline: none;" class="data" readonly>
+                                </div>
+                                </div>
+                                <div class="col col-1-4">
+                                    <label for="novaDataSaida"  class="t">Saída:</label>
+                                    <div class="col col-9">
+                                    <input type="date" id="novaDataSaida" style="background-color: #dedede;outline: none;" class="data" readonly>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                    <div class="col col-1-4">
+                                        <label for="novoPreco_custo"  class="t">Custo:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="novoPreco_custo" step="0.01" maxlength="8" onclick="this.value = '';">
+                                        </div> 
+                                    </div>
+                                    <div class="col col-1-4">
+                                        <label for="novoPreco_venda"  class="t">Venda:</label>
+                                        <div class="col col-9">                                   
+                                            <input type="text" id="novoPreco_venda" step="0.01" maxlength="8" onclick="this.value = '';">
+                                        </div>
+                                    </div>                                                                                                                       
+                                    <div class="col col-1-4">
+                                        <label for="novaQuantidade_inicial" class="t">Qtd. Inicial:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="novaQuantidade_inicial" step="0.01" style="background-color: #dedede;outline: none;" readonly >
+                                        </div>
+                                    </div>                                          
+                                    <div class="col col-1-4">
+                                        <label for="novaQuantidade" class="t">Qtd. Atual:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="novaQuantidade" step="0.01"  style="background-color: #dedede;outline: none;" readonly >
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="linha">
+                                    <div class="col col-1-4">
+                                        <label for="novoMinimo" class="t">Mínimo:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="novoMinimo" step="0.01" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6"  >
+                                        </div>
+                                    </div>
+                                    <div class="col col-1-4">
+                                        <label for="novoMaximo" class="t">Máximo:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="novoMaximo" step="0.01" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6"  >
+                                        </div>
+                                    </div>
+                                    <div class="col col-1-4">
+                                         <label for="novaReposicao" class="t">Reposição:</label>
+                                        <div class="col col-9">
+                                            <input type="text" id="novaReposicao" step="0.01" onkeydown="impedirZeroNoInicio(event);" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6"  >
+                                        </div>
+                                    </div>
+                                    <div class="col col-1-4">
+                                        <label for="dataNovaReposicao"  class="t">Nova Rep.:</label>
+                                        <div class="col col-9">
+                                            <input type="date" id="dataNovaReposicao" class="data">
+                                        </div>
+                                    </div>                                                                                                                                                                 
+                            </div>   
+                        </div>                        
+                        <div class="col col-5">
+                            <div class="linha">
+                                <div class="col col-10">
+                                    <label for="novoFornecedor" class="t" >Fornecedor:</label>
+                                    <input type="text" id="novoFornecedor" class="maiuscula" maxlength="150" oninput="formataCampo(this)">
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col col-10">
+                                    <label for="novoEndereco" class="t" >Endereço:</label>
+                                    <input type="text" id="novoEndereco" class="maiuscula" maxlength="150" oninput="formataCampo(this)">
+                                </div>
+                            </div>
+                            <div class="linha">                              
+                                <div class="col col-4">                               
+                                    <label for="novoTelefone" class="t" >Telefone:</label>                               
+                                    <input type="text" id="novoTelefone" maxlength="15" onkeyup="mascaraTelefone(this)">                                                            
+                                </div> 
+                                <div class="col col-1">
+                                </div>                         
+                                <div class="col col-5">                               
+                                    <label for="novoEmail" class="t" >Email:</label>                               
+                                    <input type="text" id="novoEmail" oninput="formataCampo(this)">                                                            
+                                </div>                                       
+                            </div> 
+                            <div class="linha">
+                                <div class="col col-10">
+                                    <label for="novaObservacao" class="t" >Observação:</label> 
+                                    <textarea class="textarea maiuscula" cols="10" rows="5" id="novaObservacao" name="observacao"  autocomplete="off" maxlength="254" oninput="formataCampo(this)" ></textarea>
+                                </div>
+                            </div> 
+                            <div class="linha">
+                                <div class="col col-1-4" style="margin-top:11px;">
+                                    <label for="novaDataValidade"  class="t">Validade:</label>
+                                    <div class="col col-9">
+                                        <input type="date" id="novaDataValidade" class="data">
+                                    </div>
+                                </div>
+                                <div class="col col-1-4" style="margin-top:11px;">
+                                    <label for="novoCustoTotal" class="t">Custo Total:</label>
+                                    <div class="col col-9">
+                                        <input type="text" id="novoCustoTotal" style="background-color: #dedede;outline: none;" value="0,00" readonly >
+                                    </div>
+                                </div>
+                                <div class="col col-1-4">
+                                </div>
+                                <div class="col col-1-4">
+                                </div>                                                                                                                                                                 
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="linha">    
+                        <div class="col col-10">
+                            <button type="submit" class="button alterar">Alterar</button>
+                            <button type="button" class="button cancelar"  onclick="cancelar()">Cancelar</button>
+                        </div> 
+                    </div>                         
+                </form>  
+            </div>                 
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
